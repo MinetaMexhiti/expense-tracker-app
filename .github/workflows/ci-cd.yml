@@ -25,8 +25,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install client dependencies
+        run: npm install --legacy-peer-deps
         working-directory: ./client
 
       - name: Run client tests
@@ -51,7 +51,7 @@ jobs:
 
       - name: Deploy to Heroku
         env:
-          HEROKU_API_KEY: ${{ secrets.Expense_Tracker }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           git remote add heroku https://git.heroku.com/expenses-tracker-api-v3.git
           git push heroku master
