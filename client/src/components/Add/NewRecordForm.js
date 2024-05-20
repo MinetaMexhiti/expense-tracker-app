@@ -68,12 +68,10 @@ const NewRecord = ({ history }) => {
       redirectUser(history, "expenses");
     }
     if (isIncCreated)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
- {
+       {
       redirectUser(history, "incomes");
     }
   }, [isExpCreated, isIncCreated]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return (
     <>
