@@ -3,9 +3,9 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
-import { registerUserAction } from "../../redux/slices/users/userSlices";
-import SuccessMessage from "../../components/SuccessMessage";
-import DisabledButton from "../../components/DisabledButton";
+import { registerUserAction } from "../../../redux/slices/users/userSlices";
+import SuccessMessage from "../../../components/SuccessMessage";
+import DisabledButton from "../../../components/DisabledButton";
 
 // Form validation schema
 const formSchema = Yup.object({

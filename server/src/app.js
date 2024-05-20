@@ -39,11 +39,3 @@ app.use(notFound);
 app.use(errorHandler);
 
 module.exports = app;
-
-
-
-
-//income
-//expenses 
-
-module.exports = app;

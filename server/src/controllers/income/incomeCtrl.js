@@ -1,16 +1,18 @@
-const { populate } = require("dotenv");
-const Income = require("../../model/Income");
-const expressAsyncHandler = require ("express-async-handler");
+const expressAsyncHandler = require("express-async-handler");
+const Income = require("../../model/income/Income");
 
-//create 
-const createIncCtrl = expressAsyncHandler (async(req, res, ) => {
-  const{title, amount, description,user} = req.body;
+//-------------------------------------
+//Create
+//-------------------------------------
+const createIncome = expressAsyncHandler(async (req, res) => {
+  const { description, title, amount } = req.body;
+
   try {
     const income = await Income.create({
-          title,
-           amount,
-            description,
-            user,
+      description,
+      title,
+      amount,
+      user: req?.user?._id,
     });
     res.json(income);
   } catch (error) {
@@ -18,59 +20,70 @@ const createIncCtrl = expressAsyncHandler (async(req, res, ) => {
   }
 });
 
-//fetch  income all  
-const fetchAllIncCtrl = expressAsyncHandler (async(req, res, ) => {
-  console.log(req?.user);
-  const { page } = req.query; 
+//-------------------------------------
+//Fetch all
+//-------------------------------------
+const fetchIncomesCtrl = expressAsyncHandler(async (req, res) => {
+  const { page } = req?.query;
   try {
-    const income = await Income.paginate( {}, { limit: 2, page: Number(page), populate : "user" } );
+    const incomes = await Income.paginate(
+      {},
+      { limit: 10, page: Number(page), sort: "desc", populate: "user" }
+    );
+
+    res.json(incomes);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+//-------------------------------------
+//Fetch single
+//-------------------------------------
+const fetchIncomeCtrl = expressAsyncHandler(async (req, res) => {
+  const { id } = req?.params;
+  try {
+    const income = await Income.findById(id);
     res.json(income);
   } catch (error) {
     res.json(error);
   }
 });
 
-//fetch single
-const fetchIncDetailsCtrl = expressAsyncHandler (async(req, res, ) => {
- const{id} = req?.params;
-   try {
-     const income = await Income.findById(id);
-     res.json(income);
-   } catch (error) {
-     res.json(error);
-   }
-  
-});
-
-//update
-
-const updateIncCtrl = expressAsyncHandler(async( req, res) => {
-  const{id} = req?.params;
-  const{title, amount, description} = req.body;
+//-------------------------------------
+//Update
+//-------------------------------------
+const updateIncomeCtrl = expressAsyncHandler(async (req, res) => {
+  const { id } = req?.params;
+  const { description, title, amount } = req.body;
   try {
     const income = await Income.findByIdAndUpdate(id, {
-      title, 
       description,
-       amount,
-    },
-    {new: true}
-  );
+      title,
+      amount,
+    });
     res.json(income);
   } catch (error) {
     res.json(error);
   }
-
 });
 
-//delete
-const deleteIncCtrl = expressAsyncHandler (async(req, res, ) => {
-  const{id} = req?.params;
-    try {
-      const income = await Income.findByIdAndDelete(id);
-      res.json(income);
-    } catch (error) {
-      res.json(error);
-    }
-   
- });
-module.exports = {createIncCtrl, fetchAllIncCtrl ,fetchIncDetailsCtrl, updateIncCtrl, deleteIncCtrl};
+//-------------------------------------
+//Delete
+//-------------------------------------
+const deletIncomeCtrl = expressAsyncHandler(async (req, res) => {
+  const { id } = req?.params;
+  try {
+    const income = await Income.findByIdAndDelete(id);
+    res.json(income);
+  } catch (error) {
+    res.json(error);
+  }
+});
+module.exports = {
+  createIncome,
+  fetchIncomeCtrl,
+  fetchIncomesCtrl,
+  updateIncomeCtrl,
+  deletIncomeCtrl,
+};
