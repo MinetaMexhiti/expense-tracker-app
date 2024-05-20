@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/users/Login';
 import Register from './pages/users/Register';
 import Home from './pages/Home';
+ //eslint-disable-next-line
+import NewRecord from "./components/Add/NewRecordForm";
+
 
 
 import './App.css';

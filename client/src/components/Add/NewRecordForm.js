@@ -61,14 +61,20 @@ const NewRecord = ({ history }) => {
   });
 
   //Redirect
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (isExpCreated) {
       redirectUser(history, "expenses");
     }
-    if (isIncCreated) {
+    if (isIncCreated)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+ {
       redirectUser(history, "incomes");
     }
   }, [isExpCreated, isIncCreated]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   return (
     <>
       {isInc ? (
