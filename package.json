@@ -24,6 +24,7 @@
     "mongoose-paginate-v2": "^1.4.2"
   },
   "devDependencies": {
+    "babel-jest": "^29.7.0",
     "nodemon": "^2.0.12"
   }
 }

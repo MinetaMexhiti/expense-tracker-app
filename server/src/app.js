@@ -1,38 +1,44 @@
 const express = require("express");
+const cors = require("cors");
 const dotenv = require("dotenv");
-const dbConnect = require("./config/dbConnect");
-const incomeRoutes = require("./routes/income/incomeRoutes");
-const expenseRoutes = require("./routes/expenses/expenseRoutes");
-const {errorHandler, notFound} = require("./middlewares/errorMiddleware");
-const userRoute = require("./routes/users/usersRoute");
-
-
-const app = express();
-//envfile
+const dbConnect = require("./config/db/dbConnect");
+const userRoutes = require("./route/users/usersRoute");
+const { errorHandler, notFound } = require("./middlewares/error/errorHandler");
+const incomeRoute = require("./route/income/income");
+const expenseRoute = require("./route/expense/expense");
+const accountStatsRoute = require("./route/stats/stats");
+//dotenv
 dotenv.config();
-
-// Connect to the database
+const app = express();
+app.get("/", (req, res) => {
+  res.json({
+    app: "Expenses-Tracker",
+    developer: "inovotek",
+    youtubeChannel: "i-Novotek",
+  });
+});
+//DB
 dbConnect();
 
-//midleware it is a function called between your request and the response
+//-------------
+//Middleware
+//--------------
 app.use(express.json());
-app.get('/', (req, res) => {
-  res.json({msg:'Welcome to Expense Tracker API'});
-});
-// users routes
-app.use('/api/users', userRoute);
-
-
-//income routes
-app.use('/api/income', incomeRoutes);
-
-//expenses 
-app.use('/api/expenses', expenseRoutes);
-//error
+//cors
+app.use(cors());
+//Users route
+app.use("/api/users", userRoutes);
+//incomeRout
+app.use("/api/incomes", incomeRoute);
+//Expenses
+app.use("/api/expenses", expenseRoute);
+//stats
+app.use("/api/stats", accountStatsRoute);
+//err handler
 app.use(notFound);
 app.use(errorHandler);
 
-
+module.exports = app;
 
 
 
