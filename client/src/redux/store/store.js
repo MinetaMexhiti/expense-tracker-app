@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import usersReducer from "../slices/users/userSlices";
+import usersReducer from "../slices/users/usersSlices";
 import expenses from "../slices/expenses/expenseSlices";
 import income from "../slices/income/incomeSlices";
 import statistics from "../slices/accountStats/accountStatsSlices";
