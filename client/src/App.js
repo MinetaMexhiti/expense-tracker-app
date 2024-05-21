@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { positions, Provider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
+import NewRecord from "./components/Add/NewRecordForm";
 
 import Home from "./Pages/Home";
 
@@ -12,7 +13,7 @@ import Register from "./Pages/Users/Register/Register";
 import Login from "./Pages/Users/Login/Login";
 import ExpensesList from "./Pages/Expenses/ExpensesList";
 import Dashboard from "./Pages/Dashboard/Dashboard";
-import NewRecord from "./components/Add/NewRecordForm.js"; // Add the .js extension
+import NewRecord from "./components/Add/NewRecordForm.js"; 
 
 import EditContent from "./components/EditContent/EditContent";
 import UserProfileExpList from "./Pages/Users/Profile/UserProfileExpList";
