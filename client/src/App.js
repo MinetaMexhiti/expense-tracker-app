@@ -2,8 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { positions, Provider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
-import NewRecord from "./components/Add/NewRecordForm";
-
 import Home from "./Pages/Home";
 
 import IncomeList from "./Pages/Income/IncomeList";
