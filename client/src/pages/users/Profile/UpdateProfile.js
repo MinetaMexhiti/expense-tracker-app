@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 import ErrorDisplayMessage from "../../../components/ErrorDisplayMessage";
@@ -24,7 +24,7 @@ const UpdateProfile = ({ location: { state: data } }) => {
   const user = useSelector(state => state?.users);
   const { userLoading, userAppErr, userServerErr, isUpdated } = user;
 
-  const history = useHistory();
+  const navigate = useNavigate();
   //initialize form
   const formik = useFormik({
     initialValues: {
@@ -44,7 +44,7 @@ const UpdateProfile = ({ location: { state: data } }) => {
   });
 
   if (isUpdated) {
-    navigate(history, "profile", undefined);
+    navigate("profile", { replace: true });
   }
   return (
     <>

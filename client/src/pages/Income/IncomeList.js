@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ContentDetails from "../../components/ContentDetails/ContentDetails";
 import ErrorDisplayMessage from "../../components/ErrorDisplayMessage";
-
 import LoadingComponent from "../../components/Loading/Loading";
 import AppPagination from "../../components/Pagination/AppPagination";
 import { fetchIncomesAction } from "../../redux/slices/income/incomeSlices";
@@ -19,14 +18,9 @@ const IncomeList = ({ location: { state } }) => {
   const income = useSelector(state => state?.income);
   const { incLoading, incomeList, incAppErr, incServerErr } = income;
 
-  const history = useHistory();
+  const navigate = useNavigate();
   // const navigate = expense => {
-  //   history.push({
-  //     pathname: "/edit",
-  //     state: {
-  //       data,
-  //     },
-  //   });
+  //   navigate("/edit", { state: { data } });
   // };
   return (
     <>

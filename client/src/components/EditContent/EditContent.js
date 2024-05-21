@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import moneySVG from "../../img/money.svg";
 import ErrorDisplayMessage from "../ErrorDisplayMessage";
@@ -18,20 +18,22 @@ const formSchema = Yup.object({
   description: Yup.string().required("Description is required"),
   amount: Yup.number().required("Amount is required"),
 });
+
 const EditContent = ({ location: { state } }) => {
   const { data } = state;
   //dispatch action
-  //history
-  const history = useHistory();
+  //navigate
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //expense
-  const expenses = useSelector(state => state?.expenses);
+  const expenses = useSelector((state) => state?.expenses);
   const { isExpUpdated, expLoading, expAppErr, expServerErr, isExpCreated } =
     expenses;
   //income
-  const income = useSelector(state => state?.income);
+  const income = useSelector((state) => state?.income);
   const { isIncUpdated, incLoading, incAppErr, incServerErr } = income;
+
   //initialize form
   const formik = useFormik({
     initialValues: {
@@ -39,14 +41,13 @@ const EditContent = ({ location: { state } }) => {
       description: data?.description,
       amount: data?.amount,
     },
-    onSubmit: values => {
+    onSubmit: (values) => {
       const transactionData = {
         id: data?._id,
         ...values,
       };
 
       if (data?.type === "income") {
-        console.log(transactionData);
         return dispatch(updateIncomeAction(transactionData));
       }
       if (data?.type === "expense") {
@@ -59,22 +60,18 @@ const EditContent = ({ location: { state } }) => {
   //redirect
   useEffect(() => {
     if (isExpUpdated) {
-      navigate(history, "user-profile-expenses", undefined);
+      navigate("user-profile-expenses");
     }
     if (isIncUpdated) {
-      navigate(history, "user-profile-income", undefined);
+      navigate("user-profile-income");
     }
-  }, [isExpUpdated, isIncUpdated]);
+  }, [isExpUpdated, isIncUpdated, navigate]);
+
   return (
     <section className="py-5 bg-secondary vh-100">
       <div className="container text-center">
         <a className="d-inline-block mb-5">
-          <img
-            className="img-fluid"
-            src={moneySVG}
-            alt="SVGeXPENSES"
-            width="200"
-          />
+          <img className="img-fluid" src={moneySVG} alt="SVGeXPENSES" width="200" />
         </a>
         <div className="row mb-4">
           <div className="col-12 col-md-8 col-lg-5 mx-auto">
@@ -84,9 +81,7 @@ const EditContent = ({ location: { state } }) => {
                   {data?.type === "income" ? " Income" : " Expense"}
                 </span>
                 <h2 className="mb-4 fw-light">
-                  {data?.type === "income"
-                    ? " Update Income"
-                    : " Update Expense"}
+                  {data?.type === "income" ? " Update Income" : " Update Expense"}
                 </h2>
                 {/* Display Err */}
                 {expAppErr || expServerErr ? (

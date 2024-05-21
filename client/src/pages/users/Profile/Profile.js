@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userProfileAction } from "../../../redux/slices/users/usersSlices";
 import calTransaction from "../../../utils/accStatistics";
 import DashboardData from "../../../components/Dashboard/DashboardData";
@@ -15,15 +15,15 @@ const Profile = () => {
   const [expResult, setExpResult] = useState([]);
   const [incResult, setIncResult] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(userProfileAction());
-  }, []);
-  //history
-  const history = useHistory();
+  }, [dispatch]);
+
   const users = useSelector(state => state?.users);
   const { profile, userLoading, userAppErr, userServerErr, userAuth } = users;
 
-  //income
   useEffect(() => {
     if (profile?.expenses) {
       const expenses = calTransaction(profile?.expenses);
@@ -33,34 +33,7 @@ const Profile = () => {
       const income = calTransaction(profile?.income);
       setIncResult(income);
     }
-  }, [profile?.income]);
-
-  // console.log(results);
-  // const income = profile?.income;
-  // const totalIncome = income
-  //   ?.map(inc => inc?.amount)
-  //   .reduce((acc, curr) => {
-  //     return acc + curr;
-  //   }, 0);
-
-  // //Total Expenses
-  // const expenses = profile?.expenses;
-  // const totalExp = expenses
-  //   ?.map(inc => inc?.amount)
-  //   .reduce((acc, curr) => {
-  //     return acc + curr;
-  //   }, 0);
-
-  // //Average expenses
-  // const averageExp = totalExp / 2;
-
-  // //min Expense
-
-  // const expensesArr = profile?.expenses?.map(exp => exp?.amount);
-  // const minExpenses = Math.min(...expensesArr);
-  // const maxExpenses = Math.max(...expensesArr);
-
-  // console.log(maxExpenses, totalExp);
+  }, [profile?.income, profile?.expenses]);
 
   return (
     <>
@@ -79,7 +52,6 @@ const Profile = () => {
               <div className="d-flex mb-6 align-items-center">
                 <img
                   className="img-fluid me-4 rounded-2"
-                  //   style="width: 64px; height: 64px;"
                   src="https://images.unsplash.com/photo-1593789382576-54f489574d26?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=faces&amp;cs=tinysrgb&amp;fit=crop&amp;h=128&amp;w=128"
                   alt=""
                 />
@@ -96,11 +68,11 @@ const Profile = () => {
                   <p className="mb-0">{profile?.email}</p>
                   <p className="mb-0">Date Joined: 12-Jan-1999</p>
                   <button
-                    onClick={() => navigate(history, "update-profile", profile)}
+                    onClick={() => navigate("/update-profile", { state: { profile } })}
                     className="btn"
                   >
                     Edit Profile
-                    <i class="bi bi-pen fs-3 m-3 text-primary"></i>
+                    <i className="bi bi-pen fs-3 m-3 text-primary"></i>
                   </button>
                 </div>
                 <DataGraph
@@ -108,8 +80,6 @@ const Profile = () => {
                   expenses={expResult?.sumTotal}
                 />
               </div>
-
-              <p className="mb-8"> </p>
 
               <UserProfileStats
                 numOfTransExp={profile?.expenses?.length}
@@ -125,13 +95,13 @@ const Profile = () => {
               />
               <div className="d-flex align-items-center justify-content-center">
                 <button
-                  onClick={() => navigate(history, "user-profile-expenses", "")}
+                  onClick={() => navigate("/user-profile-expenses")}
                   className="btn me-4 w-100 btn-danger d-flex align-items-center justify-content-center"
                 >
                   <span>View Expenses History</span>
                 </button>
                 <button
-                  onClick={() => navigate(history, "user-profile-income", "")}
+                  onClick={() => navigate("/user-profile-income")}
                   className="btn w-100 btn-outline-success d-flex align-items-center justify-content-center"
                 >
                   <span>View Income History</span>

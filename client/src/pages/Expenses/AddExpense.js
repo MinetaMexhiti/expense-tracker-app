@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import moneySVG from "../../img/money.svg";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { addNewExpAction } from "../../redux/slices/expenses/expenseAction";
 import DisabledButton from "../../components/DisabledButton";
 import redirectUser from "../../utils/redirect";
@@ -19,7 +19,7 @@ const formSchema = Yup.object({
 const AddExpense = () => {
   //dispatch action
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   //income
 
   //expense
@@ -42,9 +42,10 @@ const AddExpense = () => {
 
   useEffect(() => {
     if (isExpCreated) {
-      navigate(history, "user-profile-expenses", undefined);
+      navigate("/user-profile-expenses");
     }
-  }, [isExpCreated]);
+  }, [isExpCreated, navigate]);
+
   return (
     <>
       <section className="py-5 bg-danger vh-100">

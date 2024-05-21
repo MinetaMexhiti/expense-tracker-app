@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { positions, Provider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import NewRecord from "./components/Add/NewRecordForm";
@@ -32,50 +32,22 @@ const App = () => {
     <Provider template={AlertTemplate} {...options}>
       <BrowserRouter>
         <Navbar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <AdminRoute exact path="/dashboard" component={Dashboard} />
-          <PrivateProtectRoute
-            exact
-            path="/user-profile-expenses"
-            component={UserProfileExpList}
-          />
-          <Route
-            exact
-            path="/user-profile-income"
-            component={UserProfileIncList}
-          />
-          <Route exact path="/not-admin" component={NotAdmin} />
-
-          <PrivateProtectRoute
-            exact
-            path="/update-profile"
-            component={UpdateProfile}
-          />
-
-          <PrivateProtectRoute exact path="/edit" component={EditContent} />
-          {/* <PrivateProtectRoute
-            exact
-            path="/user-expenses"
-            component={UserExpenses}
-          /> */}
-          <PrivateProtectRoute
-            exact
-            path="/add-expense"
-            component={AddExpense}
-          />
-          <PrivateProtectRoute exact path="/add-income" component={AddIncome} />
-
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <PrivateProtectRoute exact path="/profile" component={Profile} />
-          <PrivateProtectRoute exact path="/incomes" component={IncomeList} />
-          <PrivateProtectRoute
-            exact
-            path="/expenses"
-            component={ExpensesList}
-          />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
+          <Route path="/user-profile-expenses" element={<PrivateProtectRoute><UserProfileExpList /></PrivateProtectRoute>} />
+          <Route path="/user-profile-income" element={<UserProfileIncList />} />
+          <Route path="/not-admin" element={<NotAdmin />} />
+          <Route path="/update-profile" element={<PrivateProtectRoute><UpdateProfile /></PrivateProtectRoute>} />
+          <Route path="/edit" element={<PrivateProtectRoute><EditContent /></PrivateProtectRoute>} />
+          <Route path="/add-expense" element={<PrivateProtectRoute><AddExpense /></PrivateProtectRoute>} />
+          <Route path="/add-income" element={<PrivateProtectRoute><AddIncome /></PrivateProtectRoute>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<PrivateProtectRoute><Profile /></PrivateProtectRoute>} />
+          <Route path="/incomes" element={<PrivateProtectRoute><IncomeList /></PrivateProtectRoute>} />
+          <Route path="/expenses" element={<PrivateProtectRoute><ExpensesList /></PrivateProtectRoute>} />
+        </Routes>
       </BrowserRouter>
     </Provider>
   );
