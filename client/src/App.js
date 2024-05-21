@@ -12,6 +12,7 @@ import Register from "./Pages/Users/Register/Register";
 import Login from "./Pages/Users/Login/Login";
 import ExpensesList from "./Pages/Expenses/ExpensesList";
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import NewRecord from "./components/Add/NewRecordForm.js"; // Add the .js extension
 
 import EditContent from "./components/EditContent/EditContent";
 import UserProfileExpList from "./Pages/Users/Profile/UserProfileExpList";
