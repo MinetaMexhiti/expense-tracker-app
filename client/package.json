@@ -52,5 +52,12 @@
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.34.1",
     "react-scripts": "^3.0.1"
+  },
+
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "moduleFileExtensions": ["web.js", "js", "web.ts", "ts", "web.tsx", "tsx", "json", "web.jsx", "jsx", "node"]
   }
 }
