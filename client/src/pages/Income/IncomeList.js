@@ -14,14 +14,13 @@ const IncomeList = ({ location: { state } }) => {
   const dataType = state?.data;
   useEffect(() => {
     dispatch(fetchIncomesAction(page));
-  }, [page]);
+  }, [dispatch, page]);
+
   const income = useSelector(state => state?.income);
   const { incLoading, incomeList, incAppErr, incServerErr } = income;
 
   const navigate = useNavigate();
-  // const navigate = expense => {
-  //   navigate("/edit", { state: { data } });
-  // };
+  
   return (
     <>
       {incLoading ? (

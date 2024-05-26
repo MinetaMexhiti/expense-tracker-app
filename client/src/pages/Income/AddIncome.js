@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import moneySVG from "../../img/money.svg";
 import { addNewIncomeAction } from "../../redux/slices/income/incomeSlices";
 import DisabledButton from "../../components/DisabledButton";
-import navigate from "../../utils/navigate";
 
 //Form validation
 const formSchema = Yup.object({

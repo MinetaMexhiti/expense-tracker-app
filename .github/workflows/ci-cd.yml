@@ -3,10 +3,10 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - master
+      - master # Ensure this matches your main development branch
   pull_request:
     branches:
-      - master
+      - master # Ensure this matches your main development branch
 
 jobs:
   build:
@@ -43,7 +43,8 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build # Ensure deployment starts only after a successful build
+    if: github.ref == 'refs/heads/master' # Deploys only when the master branch is updated
 
     steps:
       - name: Checkout repository
@@ -51,7 +52,7 @@ jobs:
 
       - name: Deploy to Heroku
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_API_KEY: ${{ secrets.EXPANSE_TRACKER }} # Use the correct secret name
         run: |
-          git remote add heroku https://git.heroku.com/expenses-tracker-api-v3.git
-          git push heroku master
+          git remote add heroku https://git.heroku.com/expenses-tracker-api-v3.git || true  # Ignore if the remote already exists
+          git push heroku master:master  # Push code to Heroku master branch, modify as necessary if Heroku uses main
