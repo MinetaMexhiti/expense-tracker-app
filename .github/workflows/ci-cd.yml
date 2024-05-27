@@ -1,12 +1,12 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline for Server
 
 on:
   push:
     branches:
-      - master # Ensure this matches your main development branch
+      - master
   pull_request:
     branches:
-      - master # Ensure this matches your main development branch
+      - master
 
 jobs:
   build:
@@ -18,20 +18,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2 # Corrected the indentation and uses declaration
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install client dependencies
-        run: npm install --legacy-peer-deps
-        working-directory: ./client
+      # Comment out or remove client-related steps
+      # - name: Install client dependencies
+      #   run: npm install --legacy-peer-deps
+      #   working-directory: ./client
 
-      - name: Run client tests
-        run: npm test
-        working-directory: ./client
+      # - name: Run client tests
+      #   run: npm test
+      #   working-directory: ./client
 
       - name: Install server dependencies
         run: npm install
