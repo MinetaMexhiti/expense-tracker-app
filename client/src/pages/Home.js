@@ -9,7 +9,7 @@ const Home = () => {
           className="d-none d-lg-block position-absolute top-0 start-0 bottom-0 w-50 h-100 img-fluid "
           style={{ objectFit: "cover" }}
           src={bg}
-          alt="Data background"
+          alt=""
         />
         <div className="position-relative">
           <div className="container">
@@ -32,7 +32,6 @@ const Home = () => {
                     </Link>
                     <a
                       target="_blank"
-                      rel="noopener noreferrer"
                       className="btn btn-secondary mb-2 mb-sm-0"
                       href="https://www.youtube.com/channel/UCvu6J9q1AM6q4xysGqAvVyw"
                     >
@@ -53,10 +52,9 @@ const Home = () => {
                   </div>
                   <div className="col-6 col-md-4 col-lg-3 col-xl-2 text-center mb-5">
                     <img
-                       className="d-inline-block img-fluid"
-                       src="bootstrap5-plain-assets/logos/dropbox.png"
+                      className="d-inline-block img-fluid"
+                      src="bootstrap5-plain-assets/logos/dropbox.png"
                       alt=""
-                     
                     />
                   </div>
                   <div className="col-6 col-md-4 col-lg-3 col-xl-2 text-center mb-5">
