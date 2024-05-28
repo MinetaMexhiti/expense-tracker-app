@@ -1,23 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Route, Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-const AdminRoute = ({ component: Component, ...rest }) => {
-  //check if user is logged in
+const AdminRoute = () => {
+  // Check if user is logged in and is an admin
   const user = useSelector(state => state?.users);
   const { userAuth } = user;
-  return (
-    <Route
-      {...rest}
-      render={() =>
-        userAuth?.isAdmin ? (
-          <Component {...rest} />
-        ) : (
-          <Navigate to="/not-admin" />
-        )
-      }
-    />
-  );
+
+  return userAuth?.isAdmin ? <Outlet /> : <Navigate to="/not-admin" />;
 };
 
 export default AdminRoute;

@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import { positions, Provider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
-import Home from "./Home";
+import Home from "./pages/Home";
 
 const options = {
   timeout: 5000,

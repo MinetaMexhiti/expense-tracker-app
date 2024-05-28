@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import useCurrencyFormatter from "../../hooks/useCurrencyFormatter";
-
-import { fetchAccountStatsAction } from "../../redux/slices/accountStats/accountStatsSlices";
 import DataGrap from "./DataGrap";
 
 const DashboardData = ({
@@ -19,15 +17,14 @@ const DashboardData = ({
   netProfit,
 }) => {
   const dispatch = useDispatch();
-  //format curr
+  //format currency
   const formattedTotalExp = useCurrencyFormatter("USD", totalExp);
   const formattedTotalInc = useCurrencyFormatter("USD", totalInc);
   const formattedNetProfit = useCurrencyFormatter("USD", netProfit);
-  //format date
+
   return (
     <section className="py-6">
       <div className="container">
-        {/* Grpah */}
         <div
           style={{
             display: "flex",
@@ -36,10 +33,8 @@ const DashboardData = ({
             marginBottom: "20px",
           }}
         >
-          {/* Grpah */}
           <DataGrap income={totalInc} expenses={totalExp} />
         </div>
-        {/* Net Profit */}
         <div style={{ textAlign: "center", margin: "20px" }}>
           <h2 className="text-success">Net Profit : {formattedNetProfit}</h2>
         </div>
@@ -51,7 +46,6 @@ const DashboardData = ({
                   className="d-inline-flex align-items-center justify-content-center bg-light-light rounded-2"
                   style={{ width: "40px", height: "40px" }}
                 ></span>
-                {/* Expenses Start */}
                 <span className="badge fs-2 bg-light text-danger">
                   Total Expenses
                 </span>
@@ -63,21 +57,18 @@ const DashboardData = ({
                   <span>{numOfTransExp}</span>
                 </span>
               </p>
-
               <p className="mb-0">
                 <span>Minimum Transactions</span>
                 <span className="text-danger ms-1">
                   <span>{minExp}</span>
                 </span>
               </p>
-
               <p className="mb-0">
                 <span>Maximum Transactions</span>
                 <span className="text-danger ms-1">
                   <span>{maxExp}</span>
                 </span>
               </p>
-
               <p className="mb-0">
                 <span>Average Transactions</span>
                 <span className="text-danger ms-1">
@@ -93,35 +84,29 @@ const DashboardData = ({
                   className="d-inline-flex align-items-center justify-content-center bg-danger-light rounded-2"
                   style={{ width: "40px", height: "40px" }}
                 ></span>
-
-                {/* Income Start */}
                 <span className="badge fs-2 bg-primary-light text-primary">
                   Total Income
                 </span>
               </div>
               <h1 className="mb-4">{formattedTotalInc}</h1>
-
               <p className="mb-0">
                 <span>Number of Transactions</span>
                 <span className="text-danger ms-1">
                   <span>{numOfTransInc}</span>
                 </span>
               </p>
-
               <p className="mb-0">
                 <span>Minimum Transactions</span>
                 <span className="text-danger ms-1">
                   <span>{minInc}</span>
                 </span>
               </p>
-
               <p className="mb-0">
                 <span>Maximum Transactions</span>
                 <span className="text-danger ms-1">
                   <span>{maxInc}</span>
                 </span>
               </p>
-
               <p className="mb-0">
                 <span>Average Transactions</span>
                 <span className="text-danger ms-1">

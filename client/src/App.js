@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Home from "./pages/Home";
@@ -27,20 +27,40 @@ const App = () => {
       <ToastContainer position="bottom-center" autoClose={5000} />
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
-        <Route exact path="/user-profile-expenses" element={<PrivateProtectRoute><UserProfileExpList /></PrivateProtectRoute>} />
-        <Route exact path="/user-profile-income" element={<UserProfileIncList />} />
-        <Route exact path="/not-admin" element={<NotAdmin />} />
-        <Route  exact path="/update-profile" element={<PrivateProtectRoute><UpdateProfile /></PrivateProtectRoute>} />
-        <Route exact path="/edit" element={<PrivateProtectRoute><EditContent /></PrivateProtectRoute>} />
-        <Route exact path="/add-expense" element={<PrivateProtectRoute><AddExpense /></PrivateProtectRoute>} />
-        <Route exact path="/add-income" element={<PrivateProtectRoute><AddIncome /></PrivateProtectRoute>} />
-        <Route  exact path="/login" element={<Login />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/profile" element={<PrivateProtectRoute><Profile /></PrivateProtectRoute>} />
-        <Route exact path="/incomes" element={<PrivateProtectRoute><IncomeList /></PrivateProtectRoute>} />
-        <Route exact path="/expenses" element={<PrivateProtectRoute><ExpensesList /></PrivateProtectRoute>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<AdminRoute />}>
+          <Route path="" element={<Dashboard />} />
+        </Route>
+        <Route path="/user-profile-expenses" element={<PrivateProtectRoute />}>
+          <Route path="" element={<UserProfileExpList />} />
+        </Route>
+        <Route path="/user-profile-income" element={<PrivateProtectRoute />}>
+          <Route path="" element={<UserProfileIncList />} />
+        </Route>
+        <Route path="/not-admin" element={<NotAdmin />} />
+        <Route path="/update-profile" element={<PrivateProtectRoute />}>
+          <Route path="" element={<UpdateProfile />} />
+        </Route>
+        <Route path="/edit" element={<PrivateProtectRoute />}>
+          <Route path="" element={<EditContent />} />
+        </Route>
+        <Route path="/add-expense" element={<PrivateProtectRoute />}>
+          <Route path="" element={<AddExpense />} />
+        </Route>
+        <Route path="/add-income" element={<PrivateProtectRoute />}>
+          <Route path="" element={<AddIncome />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<PrivateProtectRoute />}>
+          <Route path="" element={<Profile />} />
+        </Route>
+        <Route path="/incomes" element={<PrivateProtectRoute />}>
+          <Route path="" element={<IncomeList />} />
+        </Route>
+        <Route path="/expenses" element={<PrivateProtectRoute />}>
+          <Route path="" element={<ExpensesList />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

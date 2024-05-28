@@ -1,3 +1,2 @@
-//const baseUrl = "http://localhost:3000";
-const baseUrl = "https://expenses-tracker-api-v1.herokuapp.com";
+const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
 export default baseUrl;
