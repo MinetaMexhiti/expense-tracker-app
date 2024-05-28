@@ -10,15 +10,8 @@ const accountStatsRoute = require("./route/stats/stats");
 
 //dotenv
 dotenv.config();
-const app = express();
 
-app.get("/", (req, res) => {
-  res.json({
-    app: "Expenses-Tracker",
-    developer: "inovotek",
-    youtubeChannel: "i-Novotek",
-  });
-});
+const app = express();
 
 //DB
 dbConnect();
@@ -32,7 +25,8 @@ app.use(express.json());
 const corsOptions = {
   origin: 'http://localhost:3000', // Allow requests from your frontend origin
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, // Allow credentials
 };
 app.use(cors(corsOptions));
 
@@ -48,5 +42,13 @@ app.use("/api/stats", accountStatsRoute);
 //err handler
 app.use(notFound);
 app.use(errorHandler);
+
+app.get("/", (req, res) => {
+  res.json({
+    app: "Expenses-Tracker",
+    developer: "inovotek",
+    youtubeChannel: "i-Novotek",
+  });
+});
 
 module.exports = app;
