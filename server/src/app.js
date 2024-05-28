@@ -1,3 +1,5 @@
+// app.js
+
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -7,9 +9,11 @@ const { errorHandler, notFound } = require("./middlewares/error/errorHandler");
 const incomeRoute = require("./route/income/income");
 const expenseRoute = require("./route/expense/expense");
 const accountStatsRoute = require("./route/stats/stats");
+
 //dotenv
 dotenv.config();
 const app = express();
+
 app.get("/", (req, res) => {
   res.json({
     app: "Expenses-Tracker",
@@ -17,6 +21,7 @@ app.get("/", (req, res) => {
     youtubeChannel: "i-Novotek",
   });
 });
+
 //DB
 dbConnect();
 
@@ -24,16 +29,24 @@ dbConnect();
 //Middleware
 //--------------
 app.use(express.json());
-//cors
-app.use(cors());
+
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:3000', // Allow requests from your frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
+
 //Users route
 app.use("/api/users", userRoutes);
-//incomeRout
+//incomeRoute
 app.use("/api/incomes", incomeRoute);
 //Expenses
 app.use("/api/expenses", expenseRoute);
 //stats
 app.use("/api/stats", accountStatsRoute);
+
 //err handler
 app.use(notFound);
 app.use(errorHandler);
