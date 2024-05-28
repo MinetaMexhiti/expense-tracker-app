@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
-import { registerUserAction } from "../../../redux/slices/users/userSlices";
+import { registerUserAction } from "../../../redux/slices/users/usersSlices";
 import SuccessMessage from "../../../components/SuccessMessage";
 import DisabledButton from "../../../components/DisabledButton";
 

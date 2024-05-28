@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import ContentDetails from "../../components/ContentDetails/ContentDetails";
 import ErrorDisplayMessage from "../../components/ErrorDisplayMessage";
 import LoadingComponent from "../../components/Loading/Loading";
 import AppPagination from "../../components/Pagination/AppPagination";
 import { fetchIncomesAction } from "../../redux/slices/income/incomeSlices";
 
-const IncomeList = ({ location: { state } }) => {
+const IncomeList = () => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
-  //hide some table tabs to display user income information
-  const dataType = state?.data;
+  const location = useLocation();
+
+  // Access location state safely
+  const dataType = location?.state?.data;
+
   useEffect(() => {
     dispatch(fetchIncomesAction(page));
   }, [dispatch, page]);
@@ -20,7 +23,7 @@ const IncomeList = ({ location: { state } }) => {
   const { incLoading, incomeList, incAppErr, incServerErr } = income;
 
   const navigate = useNavigate();
-  
+
   return (
     <>
       {incLoading ? (
@@ -38,7 +41,7 @@ const IncomeList = ({ location: { state } }) => {
                 <p className="mb-0">
                   Below is the history of your income transactions records
                 </p>
-                <Link to="/add-income" className="btn  btn-success me-2 m-2">
+                <Link to="/add-income" className="btn btn-success me-2 m-2">
                   New Income
                 </Link>
               </div>
@@ -47,33 +50,33 @@ const IncomeList = ({ location: { state } }) => {
                   <tr className="table-active">
                     {!dataType && (
                       <th scope="col">
-                        <button className="btn d-flex align-items-centerr text-uppercase">
+                        <button className="btn d-flex align-items-center text-uppercase">
                           <small className="text-center">Deposited By</small>
                         </button>
                       </th>
                     )}
                     <th scope="col">
-                      <button className="btn d-flex align-items-centerr text-uppercase">
+                      <button className="btn d-flex align-items-center text-uppercase">
                         <small>Title</small>
                       </button>
                     </th>
                     <th scope="col">
-                      <button className="btn d-flex align-items-centerr text-uppercase">
+                      <button className="btn d-flex align-items-center text-uppercase">
                         <small>Description</small>
                       </button>
                     </th>
                     <th scope="col">
-                      <button className="btn d-flex align-items-centerr text-uppercase">
+                      <button className="btn d-flex align-items-center text-uppercase">
                         <small>Amount</small>
                       </button>
                     </th>
                     <th scope="col">
-                      <button className="btn d-flex align-items-centerr text-uppercase">
+                      <button className="btn d-flex align-items-center text-uppercase">
                         <small>Date</small>
                       </button>
                     </th>
                     <th scope="col">
-                      <button className="btn d-flex align-items-centerr text-uppercase">
+                      <button className="btn d-flex align-items-center text-uppercase">
                         <small>Action</small>
                       </button>
                     </th>

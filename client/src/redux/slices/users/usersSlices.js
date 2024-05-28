@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseUrl from "../../../utils/baseUrl";
 
-//Redirect action
+// Redirect action
 const resetUserRegister = createAction("user/register/reset");
 const resetUserLogin = createAction("user/login/reset");
 const resetUserUpdated = createAction("user/update/reset");
 
-//register action
+// Register action
 export const registerUserAction = createAsyncThunk(
   "users/register",
   async (user, { rejectWithValue, getState, dispatch }) => {
@@ -16,14 +16,14 @@ export const registerUserAction = createAsyncThunk(
         "Content-Type": "application/json",
       },
     };
-    //http call
+    // HTTP call
     try {
       const { data } = await axios.post(
         `${baseUrl}/api/users/register`,
         user,
         config
       );
-      //dispatch
+      // Dispatch
       dispatch(resetUserRegister());
       return data;
     } catch (error) {
@@ -35,7 +35,7 @@ export const registerUserAction = createAsyncThunk(
   }
 );
 
-//Login
+// Login action
 export const loginUserAction = createAsyncThunk(
   "user/login",
   async (userData, { rejectWithValue, getState, dispatch }) => {
@@ -45,15 +45,15 @@ export const loginUserAction = createAsyncThunk(
       },
     };
     try {
-      //make http call
+      // Make HTTP call
       const { data } = await axios.post(
         `${baseUrl}/api/users/login`,
         userData,
         config
       );
-      //save user into local storage
+      // Save user into local storage
       localStorage.setItem("userInfo", JSON.stringify(data));
-      //dispatch
+      // Dispatch
       dispatch(resetUserLogin());
       return data;
     } catch (error) {
@@ -65,7 +65,7 @@ export const loginUserAction = createAsyncThunk(
   }
 );
 
-//Logout action
+// Logout action
 export const logoutAction = createAsyncThunk(
   "/user/logout",
   async (payload, { rejectWithValue, getState, dispatch }) => {
@@ -79,11 +79,12 @@ export const logoutAction = createAsyncThunk(
     }
   }
 );
-// Profile
+
+// Profile action
 export const userProfileAction = createAsyncThunk(
   "user/profile",
   async (id, { rejectWithValue, getState, dispatch }) => {
-    //get user token
+    // Get user token
     const user = getState()?.users;
     const { userAuth } = user;
 
@@ -92,7 +93,7 @@ export const userProfileAction = createAsyncThunk(
         Authorization: `Bearer ${userAuth?.token}`,
       },
     };
-    //http call
+    // HTTP call
     try {
       const { data } = await axios.get(`${baseUrl}/api/users/profile/`, config);
       return data;
@@ -105,11 +106,11 @@ export const userProfileAction = createAsyncThunk(
   }
 );
 
-//Update action
+// Update action
 export const updateUserAction = createAsyncThunk(
   "users/update",
   async (userData, { rejectWithValue, getState, dispatch }) => {
-    //get user token
+    // Get user token
     const user = getState()?.users;
     const { userAuth } = user;
     const config = {
@@ -117,7 +118,7 @@ export const updateUserAction = createAsyncThunk(
         Authorization: `Bearer ${userAuth?.token}`,
       },
     };
-    //http call
+    // HTTP call
     try {
       const { data } = await axios.put(
         `${baseUrl}/api/users/${userData?.id}`,
@@ -128,7 +129,7 @@ export const updateUserAction = createAsyncThunk(
         },
         config
       );
-      //dispatch
+      // Dispatch
       dispatch(resetUserUpdated());
       return data;
     } catch (error) {
@@ -140,19 +141,19 @@ export const updateUserAction = createAsyncThunk(
   }
 );
 
-//get user from local storage and place into store
+// Get user from local storage and place into store
 const userLoginFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
-//slices
+// Slices
 const usersSlices = createSlice({
   name: "users",
   initialState: {
     userAuth: userLoginFromStorage,
   },
   extraReducers: builder => {
-    //register
+    // Register
     builder.addCase(registerUserAction.pending, (state, action) => {
       state.userLoading = true;
       state.userAppErr = undefined;
@@ -174,7 +175,7 @@ const usersSlices = createSlice({
       state.userServerErr = action?.error?.message;
     });
 
-    //Login
+    // Login
     builder.addCase(loginUserAction.pending, (state, action) => {
       state.userLoading = true;
       state.userAppErr = undefined;
@@ -195,7 +196,7 @@ const usersSlices = createSlice({
       state.userAppErr = action?.payload?.message;
       state.userServerErr = action?.error?.message;
     });
-    //logout
+    // Logout
     builder.addCase(logoutAction.pending, (state, action) => {
       state.userLoading = false;
     });

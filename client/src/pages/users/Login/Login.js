@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
-import { loginUserAction } from "../../../redux/slices/users/userSlices";
+import { loginUserAction } from "../../../redux/slices/users/usersSlices";
 import DisabledButton from "../../../components/DisabledButton";
 
 // Form validation schema
