@@ -1,13 +1,9 @@
 module.exports = {
   transform: {
-    "^.+\\.[tj]sx?$": "babel-jest",
+    '^.+\\.(js|jsx)$': 'babel-jest',
   },
-  moduleNameMapper: {
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-  },
+  testEnvironment: 'jsdom',
   transformIgnorePatterns: [
-    "node_modules/(?!axios|@babel/runtime)" // Add any other modules you need to transform here
+    '/node_modules/(?!axios)',
   ],
-  testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
 };

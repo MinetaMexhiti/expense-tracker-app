@@ -10,6 +10,7 @@ import DataGraph from "../../../components/Dashboard/DataGrap";
 import useDateFormatter from "../../../hooks/useDateFormatter";
 import LoadingComponent from "../../../components/Loading/Loading";
 import ErrorDisplayMessage from "../../../components/ErrorDisplayMessage";
+import { format } from 'date-fns';
 
 const Profile = () => {
   const [expResult, setExpResult] = useState([]);
@@ -34,6 +35,8 @@ const Profile = () => {
       setIncResult(income);
     }
   }, [profile?.income, profile?.expenses]);
+
+  const formattedDateJoined = profile?.createdAt ? format(new Date(profile.createdAt), 'dd-MMM-yyyy') : 'N/A';
 
   return (
     <>
@@ -66,7 +69,7 @@ const Profile = () => {
                     </span>
                   </h6>
                   <p className="mb-0">{profile?.email}</p>
-                  <p className="mb-0">Date Joined: 12-Jan-1999</p>
+                  <p className="mb-0">Date Joined: {formattedDateJoined}</p>
                   <button
                     onClick={() => navigate("/update-profile", { state: { profile } })}
                     className="btn"

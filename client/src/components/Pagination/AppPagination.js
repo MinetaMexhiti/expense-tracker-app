@@ -6,16 +6,14 @@ const AppPagination = ({ items, setPage }) => {
     <nav aria-label="...">
       <ul className="pagination">
         {arr?.map(num => (
-          <>
-            <li className="page-item">
-              <button
-                onClick={e => setPage(e.target.textContent)}
-                className="page-link"
-              >
-                {++num}
-              </button>
-            </li>
-          </>
+          <li key={num} className="page-item">
+            <button
+              onClick={e => setPage(e.target.textContent)}
+              className="page-link"
+            >
+              {++num}
+            </button>
+          </li>
         ))}
       </ul>
     </nav>

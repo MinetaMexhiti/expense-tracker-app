@@ -1,16 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useDateFormatter from "../../hooks/useDateFormatter";
-//import navigate from "../../utils/navigate";
+import { format } from "date-fns";
 
 const UserProfileContentDetails = ({ item }) => {
   const navigate = useNavigate();
+  const formattedDate = item?.createdAt ? format(new Date(item?.createdAt), 'dd-MMM-yyyy') : 'N/A';
+
   return (
     <tr className="align-middle text-dark">
       <td className="p-6">{item?.title}</td>
       <td className="p-6">{item?.description}</td>
       <td className="p-6">{item?.amount}</td>
-      <td className="p-6">{useDateFormatter(item?.createdAt)}</td>
+      <td className="p-6">{formattedDate}</td>
       <td className="p-6">
         <button
           onClick={() => navigate("edit", { state: { data: item } })}
