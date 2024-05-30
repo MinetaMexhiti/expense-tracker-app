@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node src/server.js",
-    "watch": "nodemon src/server.js"
+    "watch": "nodemon src/server.js",
+    "test": "jest"
   },
   "keywords": [
     "MERN"

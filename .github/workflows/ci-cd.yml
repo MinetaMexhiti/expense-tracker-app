@@ -1,4 +1,4 @@
-name: CI/CD Pipeline for Server
+name: CI/CD Pipeline for Full Stack Application
 
 on:
   push:
@@ -25,20 +25,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Comment out or remove client-related steps
-      # - name: Install client dependencies
-      #   run: npm install --legacy-peer-deps
-      #   working-directory: ./client
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: ./client
 
-      # - name: Run client tests
-      #   run: npm test
-      #   working-directory: ./client
+      - name: Run frontend tests
+        run: npm test
+        working-directory: ./client
 
-      - name: Install server dependencies
+      - name: Install backend dependencies
         run: npm install
         working-directory: ./server
 
-      - name: Run server tests
+      - name: Run backend tests
         run: npm test
         working-directory: ./server
 
@@ -53,7 +52,7 @@ jobs:
 
       - name: Deploy to Heroku
         env:
-          HEROKU_API_KEY: ${{ secrets.EXPANSE_TRACKER }} # Use the correct secret name
+          HEROKU_API_KEY: ${{ secrets.EXPENSE_TRACKER }} # Use the correct secret name
         run: |
           git remote add heroku https://git.heroku.com/expenses-tracker-api-v3.git || true  # Ignore if the remote already exists
           git push heroku master:master  # Push code to Heroku master branch, modify as necessary if Heroku uses main
