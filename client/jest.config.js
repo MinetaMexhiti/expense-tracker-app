@@ -1,9 +1,9 @@
 module.exports = {
   transform: {
-    '^.+\\.(js|jsx)$': 'babel-jest',
+    '^.+\\.[jt]sx?$': 'babel-jest',
   },
   testEnvironment: 'jsdom',
-  transformIgnorePatterns: [
-    '/node_modules/(?!axios)',
-  ],
+  moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+  },
 };
