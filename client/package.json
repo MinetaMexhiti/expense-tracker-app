@@ -1,16 +1,13 @@
-
-
-
-  {
-    "name": "client",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "test": "jest --watchAll=false",
-      "eject": "react-scripts eject"
-    },
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "jest --watchAll=false",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@redux-devtools/extension": "^3.3.0",
@@ -45,8 +42,6 @@
     "jest": "^29.7.0",
     "react-scripts": "latest"
   },
-
-
   "jest": {
     "transform": {
       "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
