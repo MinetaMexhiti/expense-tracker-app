@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userProfileAction } from "../../../redux/slices/users/usersSlices";
 import calTransaction from "../../../utils/accStatistics";
-import DashboardData from "../../../components/Dashboard/DashboardData";
 import UserProfileStats from "./UserProfileStats";
 import DataGrap from "../../../components/Dashboard/DataGrap";
 import LoadingComponent from "../../../components/Loading/Loading";
 import ErrorDisplayMessage from "../../../components/ErrorDisplayMessage";
 import { format } from 'date-fns';
-import navigate from "../../../utils/navigate";
 
 const Profile = () => {
   const [expResult, setExpResult] = useState({});
@@ -51,35 +49,33 @@ const Profile = () => {
         <>
           <section className="py-5">
             <div className="container">
-              <div className="row align-items-center">
-                <div className="col-md-12 col-lg-4 mb-5">
-                  <div className="text-center mb-5 mb-lg-0">
-                    <img
-                      src={profile?.profilePhoto}
-                      alt={profile?.lastname}
-                      className="rounded-circle mb-3"
-                      width="150"
-                      height="150"
-                    />
-                    <h4 className="mb-2">
-                      {profile?.firstname} {profile?.lastname}
-                    </h4>
-                    <p className="text-muted mb-0">
-                      {profile?.createdAt && format(new Date(profile?.createdAt), 'dd-MMM-yyyy')}
-                    </p>
-                    <div className="d-flex justify-content-center mt-3">
-                      <button
-                        onClick={() => navigate("/update-profile")}
-                        className="btn btn-primary me-2"
-                      >
-                        Update Profile
-                      </button>
-                      <button className="btn btn-danger me-2">
-                        Change Password
-                      </button>
-                    </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '20px' }}>
+                <img
+                  src={profile?.profilePhoto || "unknown.jpg"}
+                  alt={profile?.lastname}
+                  style={{ marginRight: '20px', width: '150px', height: '150px', objectFit: 'cover', borderRadius: '50%' }}
+                />
+                <div>
+                  <h4 className="mb-2">
+                    {profile?.firstname} {profile?.lastname}
+                  </h4>
+                  <p className="text-muted mb-0">
+                    {profile?.createdAt && format(new Date(profile?.createdAt), 'dd-MMM-yyyy')}
+                  </p>
+                  <div className="d-flex justify-content-center mt-3">
+                    <button
+                      onClick={() => navigate("/update-profile")}
+                      className="btn btn-primary me-2"
+                    >
+                      Update Profile
+                    </button>
+                    <button className="btn btn-danger me-2">
+                      Change Password
+                    </button>
                   </div>
                 </div>
+              </div>
+              <div className="row">
                 <div className="col-md-12 col-lg-8">
                   <UserProfileStats
                     netProfit={netProfit}

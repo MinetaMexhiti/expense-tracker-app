@@ -1,20 +1,10 @@
-const calTransaction = arr => {
-  const tranArr = arr?.map(data => data?.amount);
-  const sum = arr
-    ?.map(inc => inc?.amount)
-    .reduce((acc, curr) => {
-      return acc + curr;
-    }, 0);
-  const avg = sum / 2;
-  const min = Math.min(...tranArr);
-  const max = Math.max(...tranArr);
-  return {
-    sumTotal: sum,
-    avg,
-    min,
-    max,
-  };
+// utils/accStatistics.js
+const calTransaction = (transactions) => {
+  const total = transactions.reduce((acc, curr) => acc + curr.amount, 0);
+  const avg = total / transactions.length || 0;
+  const min = Math.min(...transactions.map(t => t.amount));
+  const max = Math.max(...transactions.map(t => t.amount));
+  return { totalExp: total, avgExp: avg, minExp: min, maxExp: max };
 };
 
 export default calTransaction;
-

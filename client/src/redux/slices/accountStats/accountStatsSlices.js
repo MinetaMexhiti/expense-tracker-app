@@ -1,12 +1,13 @@
+// redux/slices/statistics/accountStatsSlices.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseUrl from "../../../utils/baseUrl";
 
-//Fetch Account Stats
+// Fetch Account Stats
 export const fetchAccountStatsAction = createAsyncThunk(
   "stats/details",
   async (stats, { rejectWithValue, getState, dispatch }) => {
-    //get user token
+    // Get user token
     const user = getState()?.users;
     const { userAuth } = user;
     const config = {
@@ -14,7 +15,7 @@ export const fetchAccountStatsAction = createAsyncThunk(
         Authorization: `Bearer ${userAuth?.token}`,
       },
     };
-    //http call
+    // HTTP call
     try {
       const { data } = await axios.get(`${baseUrl}/api/stats`, config);
       return data;
