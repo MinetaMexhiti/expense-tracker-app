@@ -1,5 +1,5 @@
 const expressAsyncHandler = require("express-async-handler");
-const Expense = require("../../model/Expense/Expense");
+const Expense = require("../../model/expense/Expense");
 
 //-------------------------------------
 //Create
@@ -26,16 +26,12 @@ const createExpenseCtrl = expressAsyncHandler(async (req, res) => {
 const fetchExpensesCtrl = expressAsyncHandler(async (req, res) => {
   const { page } = req?.query;
   try {
-    // const incomes = await Expense.paginate(
-    //   { amount: { $eq: 3 } },
-    //   { limit: 10, page, sort: "desc", populate: ["user"] }
-    // );
     const expenses = await Expense.paginate(
-      {},
+      { user: req.user._id }, // Filter by logged-in user
       {
         limit: 10,
         page: Number(page),
-        sort: "desc",
+        sort: { createdAt: 'desc' },
         populate: ["user"],
       }
     );
@@ -44,18 +40,6 @@ const fetchExpensesCtrl = expressAsyncHandler(async (req, res) => {
     res.json(error);
   }
 });
-
-// const fetchExpensesCtrl = expressAsyncHandler(async (req, res) => {
-//   const { page } = req?.query;
-//   const match = {};
-//   const sort = {};
-//   try {
-//     const expenses = await Expense.find().limit(2).skip(10);
-//     res.json(expenses);
-//   } catch (error) {
-//     res.json(error);
-//   }
-// });
 
 //-------------------------------------
 //Fetch single

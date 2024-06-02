@@ -27,8 +27,8 @@ const fetchIncomesCtrl = expressAsyncHandler(async (req, res) => {
   const { page } = req?.query;
   try {
     const incomes = await Income.paginate(
-      {},
-      { limit: 10, page: Number(page), sort: "desc", populate: "user" }
+      { user: req.user._id }, // Filter by logged-in user
+      { limit: 10, page: Number(page), sort: { createdAt: 'desc' } }
     );
 
     res.json(incomes);
@@ -80,6 +80,7 @@ const deletIncomeCtrl = expressAsyncHandler(async (req, res) => {
     res.json(error);
   }
 });
+
 module.exports = {
   createIncome,
   fetchIncomeCtrl,

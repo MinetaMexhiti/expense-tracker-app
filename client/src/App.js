@@ -20,6 +20,7 @@ import AddExpense from "./pages/Expenses/AddExpense";
 import PrivateProtectRoute from "./components/Navigation/PrivateProtectRoute";
 import AdminRoute from "./components/Navigation/AdminRoute";
 import NotAdmin from "./components/NotAdmin/NotAdmin";
+import DashboardData from "./components/Dashboard/DashboardData";
 
 const App = () => {
   return (
@@ -49,6 +50,9 @@ const App = () => {
         </Route>
         <Route path="/add-income" element={<PrivateProtectRoute />}>
           <Route path="" element={<AddIncome />} />
+        </Route>
+        <Route path="/admin" element={<AdminRoute />}>
+          <Route path="" element={<DashboardData />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

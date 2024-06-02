@@ -34,7 +34,7 @@ const DataGrap = ({ income, expenses }) => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        marginTop: "40px",
+        marginTop: "79px",
       }}
     >
       <div>

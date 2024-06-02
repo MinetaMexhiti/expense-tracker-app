@@ -11,8 +11,6 @@ const IncomeList = () => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const location = useLocation();
-
-  // Access location state safely
   const dataType = location?.state?.data;
 
   useEffect(() => {
@@ -21,7 +19,6 @@ const IncomeList = () => {
 
   const income = useSelector(state => state?.income);
   const { incLoading, incomeList, incAppErr, incServerErr } = income;
-
   const navigate = useNavigate();
 
   return (

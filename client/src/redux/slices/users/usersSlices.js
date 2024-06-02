@@ -1,257 +1,185 @@
-import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import baseUrl from "../../../utils/baseUrl";
+import baseURL from "../../../utils/baseUrl";
 
-// Redirect action
-const resetUserRegister = createAction("user/register/reset");
-const resetUserLogin = createAction("user/login/reset");
-const resetUserUpdated = createAction("user/update/reset");
-
-// Register action
+// Register user
 export const registerUserAction = createAsyncThunk(
   "users/register",
-  async (user, { rejectWithValue, getState, dispatch }) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    // HTTP call
+  async (user, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(
-        `${baseUrl}/api/users/register`,
-        user,
-        config
-      );
-      // Dispatch
-      dispatch(resetUserRegister());
+      const { data } = await axios.post(`${baseURL}/api/users/register`, user);
       return data;
     } catch (error) {
-      if (!error.response) {
-        throw error;
-      }
-      return rejectWithValue(error?.response?.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-// Login action
+// Login user
 export const loginUserAction = createAsyncThunk(
-  "user/login",
-  async (userData, { rejectWithValue, getState, dispatch }) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+  "users/login",
+  async (user, { rejectWithValue }) => {
     try {
-      // Make HTTP call
-      const { data } = await axios.post(
-        `${baseUrl}/api/users/login`,
-        userData,
-        config
-      );
-      // Save user into local storage
+      const { data } = await axios.post(`${baseURL}/api/users/login`, user);
+      // save user to local storage
       localStorage.setItem("userInfo", JSON.stringify(data));
-      // Dispatch
-      dispatch(resetUserLogin());
       return data;
     } catch (error) {
-      if (!error?.response) {
-        throw error;
-      }
-      return rejectWithValue(error?.response?.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-// Logout action
+// Logout user
 export const logoutAction = createAsyncThunk(
-  "/user/logout",
-  async (payload, { rejectWithValue, getState, dispatch }) => {
+  "users/logout",
+  async (payload, { rejectWithValue }) => {
     try {
       localStorage.removeItem("userInfo");
+      return true;
     } catch (error) {
-      if (!error?.response) {
-        throw error;
-      }
-      return rejectWithValue(error?.response?.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-// Profile action
+// User profile
 export const userProfileAction = createAsyncThunk(
-  "user/profile",
-  async (id, { rejectWithValue, getState, dispatch }) => {
+  "users/profile",
+  async (payload, { rejectWithValue, getState }) => {
     // Get user token
-    const user = getState()?.users;
-    const { userAuth } = user;
-
+    const userToken = getState()?.users?.userAuth?.token;
     const config = {
       headers: {
-        Authorization: `Bearer ${userAuth?.token}`,
+        Authorization: `Bearer ${userToken}`,
       },
     };
-    // HTTP call
+
     try {
-      const { data } = await axios.get(`${baseUrl}/api/users/profile/`, config);
+      const { data } = await axios.get(`${baseURL}/api/users/profile`, config);
       return data;
     } catch (error) {
-      if (!error?.response) {
-        throw error;
-      }
-      return rejectWithValue(error?.response?.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-// Update action
-export const updateUserAction = createAsyncThunk(
-  "users/update",
-  async (userData, { rejectWithValue, getState, dispatch }) => {
+// Update profile
+export const updateProfileAction = createAsyncThunk(
+  "users/update-profile",
+  async (user, { rejectWithValue, getState }) => {
     // Get user token
-    const user = getState()?.users;
-    const { userAuth } = user;
+    const userToken = getState()?.users?.userAuth?.token;
     const config = {
       headers: {
-        Authorization: `Bearer ${userAuth?.token}`,
+        Authorization: `Bearer ${userToken}`,
       },
     };
-    // HTTP call
+
     try {
-      const { data } = await axios.put(
-        `${baseUrl}/api/users/${userData?.id}`,
-        {
-          lastname: userData?.lastname,
-          firstname: userData?.firstname,
-          email: userData?.email,
-        },
-        config
-      );
-      // Dispatch
-      dispatch(resetUserUpdated());
+      const { data } = await axios.put(`${baseURL}/api/users/profile`, user, config);
+      // Update user in local storage
+      localStorage.setItem("userInfo", JSON.stringify(data));
       return data;
     } catch (error) {
-      if (!error.response) {
-        throw error;
-      }
-      return rejectWithValue(error?.response?.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
-
-// Get user from local storage and place into store
-const userLoginFromStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
-  : null;
 
 // Slices
-const usersSlices = createSlice({
+const usersSlice = createSlice({
   name: "users",
-  initialState: {
-    userAuth: userLoginFromStorage,
+  initialState: {},
+  reducers: {
+    // Clean up registered data
+    resetRegisteredUser: (state) => {
+      state.isRegistered = false;
+    },
   },
-  extraReducers: builder => {
-    // Register
-    builder.addCase(registerUserAction.pending, (state, action) => {
+  extraReducers: (builder) => {
+    // Register user
+    builder.addCase(registerUserAction.pending, (state) => {
       state.userLoading = true;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
-    });
-    builder.addCase(resetUserRegister, (state, action) => {
-      state.isRegistered = true;
     });
     builder.addCase(registerUserAction.fulfilled, (state, action) => {
       state.userLoading = false;
+      state.isRegistered = true;
       state.registered = action?.payload;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
-      state.isRegistered = false;
     });
     builder.addCase(registerUserAction.rejected, (state, action) => {
       state.userLoading = false;
-      state.userAppErr = action?.payload?.message;
+      state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.message;
     });
 
-    // Login
-    builder.addCase(loginUserAction.pending, (state, action) => {
+    // Login user
+    builder.addCase(loginUserAction.pending, (state) => {
       state.userLoading = true;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
     });
-    builder.addCase(resetUserLogin, (state, action) => {
-      state.isLogin = true;
-    });
     builder.addCase(loginUserAction.fulfilled, (state, action) => {
-      state.userLoading = false;
       state.userAuth = action?.payload;
+      state.userLoading = false;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
-      state.isLogin = false;
+      state.isLogin = true;
     });
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.userLoading = false;
-      state.userAppErr = action?.payload?.message;
+      state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.message;
     });
-    // Logout
-    builder.addCase(logoutAction.pending, (state, action) => {
-      state.userLoading = false;
-    });
-    builder.addCase(logoutAction.fulfilled, (state, action) => {
+
+    // Logout user
+    builder.addCase(logoutAction.fulfilled, (state) => {
       state.userAuth = undefined;
-      state.userLoading = false;
-      state.userAppErr = undefined;
-      state.userServerErr = undefined;
+      state.isLogin = undefined;
     });
-    builder.addCase(logoutAction.rejected, (state, action) => {
-      state.userAppErr = action?.payload?.message;
-      state.userServerErr = action?.error?.message;
-      state.userLoading = false;
-    });
-    // Profile
-    builder.addCase(userProfileAction.pending, (state, action) => {
+
+    // User profile
+    builder.addCase(userProfileAction.pending, (state) => {
       state.userLoading = true;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
     });
-
     builder.addCase(userProfileAction.fulfilled, (state, action) => {
-      state.userLoading = false;
       state.profile = action?.payload;
+      state.userLoading = false;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
     });
     builder.addCase(userProfileAction.rejected, (state, action) => {
       state.userLoading = false;
-      state.userAppErr = action?.payload?.message;
+      state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.message;
     });
 
-    // Update Profile
-    builder.addCase(updateUserAction.pending, (state, action) => {
+    // Update profile
+    builder.addCase(updateProfileAction.pending, (state) => {
       state.userLoading = true;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
     });
-    builder.addCase(resetUserUpdated, (state, action) => {
+    builder.addCase(updateProfileAction.fulfilled, (state, action) => {
+      state.profile = action?.payload;
       state.isUpdated = true;
-    });
-    builder.addCase(updateUserAction.fulfilled, (state, action) => {
       state.userLoading = false;
-      state.profileUpdated = action?.payload;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
-      state.isUpdated = false;
     });
-    builder.addCase(updateUserAction.rejected, (state, action) => {
+    builder.addCase(updateProfileAction.rejected, (state, action) => {
       state.userLoading = false;
-      state.userAppErr = action?.payload?.message;
+      state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.message;
     });
   },
 });
 
-export default usersSlices.reducer;
+export const { resetRegisteredUser } = usersSlice.actions;
+export default usersSlice.reducer;

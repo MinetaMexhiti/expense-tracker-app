@@ -1,26 +1,48 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAccountStatsAction } from "../../redux/slices/accountStats/accountStatsSlices";
 import useCurrencyFormatter from "../../hooks/useCurrencyFormatter";
 import DataGrap from "./DataGrap";
 
-const DashboardData = ({
-  avgExp,
-  totalExp,
-  minExp,
-  maxExp,
-  numOfTransExp,
-  avgInc,
-  totalInc,
-  minInc,
-  maxInc,
-  numOfTransInc,
-  netProfit,
-}) => {
+const DashboardData = () => {
   const dispatch = useDispatch();
-  //format currency
+  const { stats, statsLoading, appErr, serverErr } = useSelector(state => state.statistics);
+
+  useEffect(() => {
+    dispatch(fetchAccountStatsAction());
+  }, [dispatch]);
+
+  const expensesStats = stats?.expensesStats?.[0] || {};
+  const incomeStats = stats?.incomeStats?.[0] || {};
+  const profit = stats?.profit || 0;
+
+  const totalExp = expensesStats.totalExp || 0;
+  const totalInc = incomeStats.totalInc || 0;
+  const avgExp = expensesStats.averageExp || 0;
+  const avgInc = incomeStats.averageInc || 0;
+  const minExp = expensesStats.minExp || 0;
+  const maxExp = expensesStats.maxExp || 0;
+  const minInc = incomeStats.minInc || 0;
+  const maxInc = incomeStats.maxInc || 0;
+  const numOfTransExp = expensesStats.totalRecords || 0;
+  const numOfTransInc = incomeStats.totalRecords || 0;
+  const netProfit = profit || 0;
+
   const formattedTotalExp = useCurrencyFormatter("USD", totalExp);
   const formattedTotalInc = useCurrencyFormatter("USD", totalInc);
   const formattedNetProfit = useCurrencyFormatter("USD", netProfit);
+
+  if (statsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (appErr || serverErr) {
+    return (
+      <div>
+        {appErr} {serverErr}
+      </div>
+    );
+  }
 
   return (
     <section className="py-6">

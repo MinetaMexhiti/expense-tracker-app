@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import ContentDetails from "../../components/ContentDetails/ContentDetails";
 import ErrorDisplayMessage from "../../components/ErrorDisplayMessage";
 import LoadingComponent from "../../components/Loading/Loading";
-
 import AppPagination from "../../components/Pagination/AppPagination";
 import { fetchExpensesAction } from "../../redux/slices/expenses/expenseAction";
 import { userProfileAction } from "../../redux/slices/users/usersSlices";
@@ -16,17 +15,15 @@ const ExpensesList = () => {
 
   useEffect(() => {
     dispatch(fetchExpensesAction(page));
-  }, [dispatch, page]); // Added dispatch to the dependency array
+  }, [dispatch, page]);
 
-  // Expenses
   const expenses = useSelector(state => state.expenses);
   const { expLoading, expenseList, expAppErr, expServerErr } = expenses;
   const totalExp = calTransaction(expenseList?.docs ? expenseList?.docs : []);
 
-  // User profile
   useEffect(() => {
     dispatch(userProfileAction());
-  }, [dispatch]); // Added dispatch to the dependency array
+  }, [dispatch]);
 
   const user = useSelector(state => state.users);
   const { profile, userLoading, userAppErr, userServerErr } = user;

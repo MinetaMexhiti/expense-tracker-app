@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseUrl from "../../../utils/baseUrl";
 
-//Fetch All Exp
+//Fetch Account Stats
 export const fetchAccountStatsAction = createAsyncThunk(
   "stats/details",
   async (stats, { rejectWithValue, getState, dispatch }) => {
@@ -27,14 +27,10 @@ export const fetchAccountStatsAction = createAsyncThunk(
   }
 );
 
-//--------------
-//slices
-//--------------
-const incomeSlices = createSlice({
+const statisticsSlice = createSlice({
   name: "statistics",
   initialState: {},
   extraReducers: builder => {
-    //fetch all
     builder.addCase(fetchAccountStatsAction.pending, (state, action) => {
       state.statsLoading = true;
       state.appErr = undefined;
@@ -45,7 +41,6 @@ const incomeSlices = createSlice({
       state.stats = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
-      state.isIncomeCreated = false;
     });
     builder.addCase(fetchAccountStatsAction.rejected, (state, action) => {
       state.statsLoading = false;
@@ -55,4 +50,4 @@ const incomeSlices = createSlice({
   },
 });
 
-export default incomeSlices.reducer;
+export default statisticsSlice.reducer;

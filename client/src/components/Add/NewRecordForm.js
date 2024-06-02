@@ -9,7 +9,6 @@ import NewRecordWelcomePage from "./NewRecordWelcomePage";
 import { addNewIncomeAction } from "../../redux/slices/income/incomeSlices";
 import DisabledButton from "../DisabledButton";
 import ErrorDisplayMessage from "../ErrorDisplayMessage";
-import { toast } from 'react-toastify'; // Import toast from react-toastify
 
 // Form validation
 const formSchema = Yup.object({
@@ -25,13 +24,13 @@ const NewRecord = () => {
   const isExpHandler = () => {
     setIsExp(true);
     setIsInc(false);
-    toast.info("Are you sure you want to add Expense?"); // Changed from alert.show to toast.info
+    alert("Are you sure you want to add Expense?");
   };
 
   const isIncHandler = () => {
     setIsExp(false);
     setIsInc(true);
-    toast.info("Want to add income?"); // Changed from alert.show to toast.info
+    alert("Want to add income?");
   };
 
   //dispatch action

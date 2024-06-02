@@ -9,11 +9,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(fetchAccountStatsAction());
-  }, [dispatch]);  // Added dispatch to the dependency array
+  }, [dispatch]);
 
   const statistics = useSelector(state => state.statistics);
   const { statsLoading, appErr, serverErr, stats } = statistics;
-  console.log({ statsLoading, appErr, serverErr, stats });
   const exp = stats?.expensesStats[0];
   const inc = stats?.incomeStats[0];
 
