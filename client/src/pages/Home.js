@@ -21,16 +21,10 @@ const Home = () => {
                   Keep Track of Your Income & Expenses
                 </h2>
                 <p className="lead text-muted mb-5">
-                  View all your income and expenses flow from your team in one
-                  dashboard
+                Unified Financial Insights for Your Personal and Team Budget.
                 </p>
                 <div className="d-flex flex-wrap">
-                  <Link
-                    to="/profile"
-                    className="btn btn-primary me-2 mb-2 mb-sm-0"
-                  >
-                    Track your performance
-                  </Link>
+                  
                 </div>
               </div>
               

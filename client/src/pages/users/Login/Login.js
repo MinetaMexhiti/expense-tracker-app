@@ -47,7 +47,7 @@ const Login = () => {
           <div className="col-12 col-lg-5 mb-5">
             <div>
               <h2 className="display-5 fw-bold mb-4 text-white">
-                Keep Track of what you are spending
+              Your Finances, Simplified ! Control Your Cash Flow With Us .
               </h2>
               <hr className="text-warning w-100" />
             </div>
