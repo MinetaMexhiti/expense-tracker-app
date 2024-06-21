@@ -1,24 +1,30 @@
 const expressAsyncHandler = require("express-async-handler");
 const Expense = require("../../model/expense/Expense");
+const { getCategory } = require("../../openaiService")
 
 //-------------------------------------
 //Create
 //-------------------------------------
 const createExpenseCtrl = expressAsyncHandler(async (req, res) => {
   const { description, title, amount } = req.body;
+
   console.log(req.user);
   try {
+    const category = await getCategory({ description, title, amount });
     const exp = await Expense.create({
       description,
       title,
       amount,
+      category, // Add category to the expense
       user: req?.user?._id,
     });
+    console.log("New Expense Created:", exp); // Log the new expense
     res.json(exp);
   } catch (error) {
-    res.json(error);
+    res.status(500).json({ message: "Failed to create expense", error });
   }
 });
+
 
 //-------------------------------------
 //Fetch all
@@ -37,7 +43,7 @@ const fetchExpensesCtrl = expressAsyncHandler(async (req, res) => {
     );
     res.json(expenses);
   } catch (error) {
-    res.json(error);
+    res.status(500).json({ message: "Failed to fetch expenses", error });
   }
 });
 
@@ -53,7 +59,6 @@ const fetchExpenseCtrl = expressAsyncHandler(async (req, res) => {
     res.json(error);
   }
 });
-
 //-------------------------------------
 //Update
 //-------------------------------------

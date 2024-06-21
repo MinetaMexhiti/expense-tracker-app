@@ -22,14 +22,7 @@ export const addNewExpAction = createAsyncThunk(
     //http call
     try {
       const { data } = await axios.post(
-        `${baseUrl}/api/expenses`,
-        {
-          title: expense?.title,
-          description: expense?.description,
-          amount: expense?.amount,
-        },
-        config
-      );
+        `${baseUrl}/api/expenses`, expense , config);
       //dispatch
       dispatch(resetExpCreated());
       return data;

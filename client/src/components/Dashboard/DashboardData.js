@@ -4,6 +4,9 @@ import { fetchAccountStatsAction } from "../../redux/slices/accountStats/account
 import useCurrencyFormatter from "../../hooks/useCurrencyFormatter";
 import DataGrap from "./DataGrap";
 
+
+
+
 const DashboardData = () => {
   const dispatch = useDispatch();
   const { stats, statsLoading, appErr, serverErr } = useSelector(state => state.statistics);

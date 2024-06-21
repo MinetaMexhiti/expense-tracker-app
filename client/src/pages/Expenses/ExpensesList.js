@@ -87,6 +87,11 @@ const ExpensesList = () => {
                     </th>
                     <th scope="col">
                       <button className="btn d-flex align-items-center text-uppercase">
+                        <small>Category</small> {/* Add category header */}
+                      </button>
+                    </th>
+                    <th scope="col">
+                      <button className="btn d-flex align-items-center text-uppercase">
                         <small>Action</small>
                       </button>
                     </th>
@@ -95,7 +100,7 @@ const ExpensesList = () => {
                 <tbody>
                   {expenseList?.length <= 0 ? (
                     <tr>
-                      <td colSpan="6" className="text-center">
+                      <td colSpan="7" className="text-center">
                         <h2>No Expense Found</h2>
                       </td>
                     </tr>

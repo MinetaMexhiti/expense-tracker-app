@@ -1,14 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import usersReducer from "../slices/users/usersSlices";
-import expenses from "../slices/expenses/expenseSlices";
-import income from "../slices/income/incomeSlices";
-import statistics from "../slices/accountStats/accountStatsSlices";
+import expensesReducer from "../slices/expenses/expenseSlices";
+import incomeReducer from "../slices/income/incomeSlices";
+import statisticsReducer from "../slices/accountStats/accountStatsSlices";
+
+
 const store = configureStore({
   reducer: {
     users: usersReducer,
-    expenses,
-    income,
-    statistics,
+    expenses: expensesReducer,
+    income: incomeReducer,
+    statistics: statisticsReducer,
+ 
   },
 });
 
