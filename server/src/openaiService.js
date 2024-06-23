@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const apiKey = "sk-proj-JJgl2M7EH0HKIjcByJ72T3BlbkFJjQet70ro1VPYOQgNdvQK"; // Your API key
+const apiKey = "sk-proj-ExqLVwFnUFoMc4lyHgzZT3BlbkFJOltP6lonzFfcEmMiqsMW"; // Your API key
 
 const getCategory = async (expense) => {
   try {
